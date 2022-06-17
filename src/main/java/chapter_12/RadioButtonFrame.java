@@ -21,7 +21,10 @@ public class RadioButtonFrame extends JFrame {
         buttonPanel = new JPanel();
         buttonGroup = new ButtonGroup();
 
-        addRadioButton("Small", 18);
+        addRadioButton("Small", 8);
+        addRadioButton("Medium", 12);
+        addRadioButton("Large", 18);
+        addRadioButton("Extra", 36);
 
         add(buttonPanel, BorderLayout.SOUTH);
         pack();
@@ -34,5 +37,6 @@ public class RadioButtonFrame extends JFrame {
             label.setFont(new Font("Serif", Font.PLAIN, size));
         });
         buttonGroup.add(radioButton);
+        buttonPanel.add(radioButton);
     }
 }
