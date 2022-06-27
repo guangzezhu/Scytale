@@ -2,6 +2,7 @@ package chapter_12;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.TestFrame;
 
 import javax.swing.*;
 import java.awt.*;
@@ -32,12 +33,12 @@ public class MenuFrame extends JFrame {
     public MenuFrame() throws HeadlessException {
         setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 
+        // menu File
         JMenu fileMenu = new JMenu("File");
         fileMenu.add(new TestAction("New"));
 
         JMenuItem openItem = fileMenu.add(new TestAction("Open"));
         openItem.setAccelerator(KeyStroke.getKeyStroke("ctrl O"));
-
         fileMenu.addSeparator();
 
         saveAction = new TestAction("Save");
@@ -74,19 +75,62 @@ public class MenuFrame extends JFrame {
         group.add(insertItem);
         group.add(overTypeItem);
 
-        // demonstrate
+        // demonstrate icons
         Action cutAction = new TestAction("Cut");
-        cutAction.putValue(Action.SMALL_ICON, new ImageIcon("image/icon-png"));
+        cutAction.putValue(Action.SMALL_ICON, TestFrame.getImageIcon("image/icon.png"));
         Action copyAction = new TestAction("Copy");
-        copyAction.putValue(Action.SMALL_ICON, new ImageIcon("image/icon-png"));
+        copyAction.putValue(Action.SMALL_ICON, TestFrame.getImageIcon("image/icon.png"));
         Action pasteAction = new TestAction("Paste");
-        pasteAction.putValue(Action.SMALL_ICON, new ImageIcon("image/icon-png"));
+        pasteAction.putValue(Action.SMALL_ICON, TestFrame.getImageIcon("image/icon.png"));
 
-        JMenu editMenu = new JMenu();
+        JMenu editMenu = new JMenu("Edit");
         editMenu.add(cutAction);
         editMenu.add(copyAction);
         editMenu.add(pasteAction);
 
+        // demonstrate nested menus
+        JMenu optionMenu = new JMenu("Options");
+        optionMenu.add(readOnlyItem);
+        optionMenu.addSeparator();
+        optionMenu.add(insertItem);
+        optionMenu.add(overTypeItem);
+
+        editMenu.addSeparator();
+        editMenu.add(optionMenu);
+
+
+
         // demonstrate mnemonics
+        JMenu helpMenu = new JMenu("Help");
+        helpMenu.setMnemonic('H');
+
+        JMenuItem indexItem = new JMenuItem("Index");
+        indexItem.setMnemonic('I');
+        helpMenu.add(indexItem);
+
+        // you can also add the mnemonic key to an action
+        Action aboutAction = new TestAction("About");
+        aboutAction.putValue(Action.MNEMONIC_KEY, new Integer('A'));
+        helpMenu.add(aboutAction);
+
+        JMenuBar menuBar = new JMenuBar();
+        setJMenuBar(menuBar);
+
+        menuBar.add(fileMenu);
+        menuBar.add(editMenu);
+        menuBar.add(helpMenu);
+
+        popup = new JPopupMenu();
+        popup.add(cutAction);
+        popup.add(copyAction);
+        popup.add(pasteAction);
+
+        JPanel panel = new JPanel();
+        panel.setComponentPopupMenu(popup);
+        add(panel);
+    }
+
+    public static void main(String[] args) {
+        TestFrame.test(MenuFrame.class);
     }
 }

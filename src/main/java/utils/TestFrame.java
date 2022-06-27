@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class TestFrame extends JFrame {
 
@@ -43,5 +44,9 @@ public class TestFrame extends JFrame {
             }
 
         });
+    }
+
+    public static ImageIcon getImageIcon(String path) {
+        return new ImageIcon(ClassLoader.getSystemResource(path));
     }
 }
